@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Mahamaya</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        />
+        <style>
+            /* CSS Styling */
+            @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap");
+            @import url("https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap");
+
+            :root {
+                --primary-red: #E87132;
+                --light-gray: #f5f5f5;
+                --dark-text: #333333;
+                --medium-gray: #777777;
+                --border-color: #e0e0e0;
+            }
+
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                font-family: "Hind Siliguri", "Noto Sans Bengali", sans-serif; /* Added Hind Siliguri as primary */
+                background-color: var(--light-gray);
+                color: var(--dark-text);
+                line-height: 1.6;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+
+            .container {
+                max-width: 450px; /* Typical mobile screen width, adjust as needed */
+                margin: 0 auto;
+                background-color: #ffffff;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                position: relative; /* For fixed bottom nav */
+            }
+
+            /* Header */
+            .header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 15px;
+                background-color: #ffffff;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .logo {
+                display: flex;
+                align-items: center;
+                font-size: 1.2em;
+                font-weight: 700;
+                color: var(--primary-red);
+            }
+
+            .logo img {
+                margin-right: 8px;
+                width: 76px; /* Ensure consistent size */
+                height: 48px; /* Ensure consistent size */
+            }
+
+            .logo span:last-child {
+                font-size: 0.8em;
+                font-weight: 500;
+                color: var(--medium-gray);
+                margin-left: 5px;
+            }
+
+            .header-icons {
+                display: flex;
+                align-items: center;
+            }
+
+            .header-icons .fa-bell {
+                font-size: 1.4em;
+                color: var(--medium-gray);
+                margin-right: 15px;
+            }
+
+            .header-icons .user-profile {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+
+            /* Section Header (common for sections) */
+            .section-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 15px;
+                background-color: #ffffff;
+                margin-top: 10px;
+            }
+
+            .section-header h3 {
+                font-size: 1.1em;
+                font-weight: 600;
+                color: var(--dark-text);
+            }
+
+            .section-header a {
+                text-decoration: none;
+                color: var(--primary-red);
+                font-size: 0.9em;
+                font-weight: 500;
+            }
+
+            /* Features and Services */
+            .features-services .grid-container {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+                padding: 15px;
+                background-color: #ffffff;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .grid-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 8px;
+                text-decoration: none; /* Remove underline from anchor tags */
+                color: inherit; /* Inherit color from parent */
+                padding: 10px 5px; /* Add padding to make it a larger clickable area */
+                border-radius: 8px;
+                transition:
+                    background-color 0.2s ease,
+                    transform 0.2s ease;
+            }
+
+            .grid-item:hover {
+                background-color: var(--light-gray);
+                transform: translateY(-2px);
+            }
+
+            .grid-item:active {
+                background-color: #e0e0e0;
+                transform: translateY(0);
+            }
+
+            .icon-circle {
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                background-color: var(--light-gray);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            }
+
+            .icon-circle i {
+                font-size: 1.8em;
+                color: var(--primary-red);
+            }
+
+            .grid-item p {
+                font-size: 0.85em;
+                color: var(--dark-text);
+                font-weight: 500;
+            }
+
+            /* Carousel Styling (General) */
+            .carousel-container {
+                position: relative;
+                width: 90%;
+                margin: 0 auto;
+                overflow: hidden;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .carousel-slide {
+                display: none; /* Hidden by default, JS manages visibility */
+                width: 100%;
+                animation: fadeIn 0.5s ease-in-out; /* Smooth transition for slides */
+            }
+
+            .carousel-slide.active {
+                display: block;
+            }
+
+            .carousel-slide img {
+                width: 100%;
+                height: auto;
+                display: block;
+                border-radius: 10px; /* Match container border-radius */
+            }
+
+            .carousel-dots {
+                display: flex;
+                justify-content: center;
+                margin-top: 15px;
+                gap: 8px;
+            }
+
+            .dot {
+                height: 8px;
+                width: 8px;
+                background-color: var(--border-color);
+                border-radius: 50%;
+                display: inline-block;
+                cursor: pointer;
+                transition: background-color 0.3s ease; /* Smooth transition for dots */
+            }
+
+            .dot.active {
+                background-color: var(--primary-red);
+            }
+
+            /* Keyframe animation for carousel slide */
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            /* Upcoming Events Section */
+            .upcoming-events {
+                margin-top: 10px;
+                background-color: #ffffff;
+                padding-bottom: 15px;
+            }
+
+            /* Past Activities Section */
+            .past-activities {
+                flex-grow: 1; /* Pushes the bottom nav to the bottom */
+                padding-bottom: 70px; /* Space for the fixed bottom nav */
+                background-color: #ffffff;
+                margin-top: 10px;
+            }
+
+            /* Bottom Navigation */
+            .bottom-nav {
+                position: fixed;
+                bottom: 0;
+                left: 50%; /* Center horizontally */
+                transform: translateX(-50%); /* Adjust for its own width */
+                width: 100%;
+                max-width: 450px; /* Match container max-width */
+                background-color: #ffffff;
+                display: flex;
+                justify-content: space-around;
+                padding: 10px 0;
+                border-top: 1px solid var(--border-color);
+                box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+                z-index: 1000; /* Ensure it stays on top */
+            }
+
+            .nav-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-decoration: none;
+                color: var(--medium-gray);
+                font-size: 0.75em;
+                font-weight: 500;
+                gap: 4px;
+                flex: 1; /* Distribute space evenly */
+                padding: 5px 0; /* Add some padding for touch target */
+                transition:
+                    color 0.3s ease,
+                    background-color 0.2s ease,
+                    transform 0.2s ease; /* Added transitions */
+                border-radius: 8px; /* Added border-radius for button feel */
+            }
+
+            .nav-item:hover:not(.active-nav-item) {
+                /* Exclude active item from hover effect */
+                background-color: var(--light-gray);
+                transform: translateY(-2px);
+            }
+
+            .nav-item:active:not(.active-nav-item) {
+                /* Exclude active item from active effect */
+                background-color: #e0e0e0;
+                transform: translateY(0);
+            }
+
+            .nav-item i {
+                font-size: 1.4em;
+            }
+
+            .nav-item.active-nav-item {
+                color: var(--primary-red);
+            }
+
+            /* Center home button styling */
+            .active-nav-item i {
+                background-color: var(--primary-red);
+                color: white;
+                width: 55px;
+                height: 55px;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+                top: -20px; /* Lift it up */
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                border: 4px solid #ffffff; /* White border */
+                transition: all 0.3s ease;
+            }
+
+            .active-nav-item span {
+                position: relative;
+                top: -15px; /* Adjust text position */
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <header class="header">
+                <div class="logo">
+                    <img
+                        src="https://i.postimg.cc/65tYHJtG/logo.png"
+                        alt="Mahamaya Logo"
+                    />
+                </div>
+                <div class="header-icons">
+                    <i class="fas fa-bell"></i>
+                    <img
+                        src="https://i.postimg.cc/nL30L7ck/Sample.png"
+                        alt="User Profile"
+                        class="user-profile"
+                    />
+                </div>
+            </header>
+
+            <section class="features-services">
+                <div class="section-header">
+                    <h3>ফিচার এবং সার্ভিস</h3>
+                    <a href="more.html">সবগুলো দেখুন</a>
+                </div>
+                <div class="grid-container">
+                    <a href="#" class="grid-item" role="button" tabindex="0">
+                        <div class="icon-circle">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <p>মেম্বার রেজিস্ট্রেশন</p>
+                    </a>
+                    <a href="#" class="grid-item" role="button" tabindex="0">
+                        <div class="icon-circle">
+                            <i class="fas fa-money-check-alt"></i>
+                        </div>
+                        <p>সাবস্ক্রিপশন সে</p>
+                    </a>
+                    <a href="#" class="grid-item" role="button" tabindex="0">
+                        <div class="icon-circle">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <p>ডোনেশন প্রদান</p>
+                    </a>
+                    <a
+                        href="yearly-calculation.html"
+                        class="grid-item"
+                        role="button"
+                        tabindex="0"
+                    >
+                        <div class="icon-circle">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <p>বার্ষিক হিসাব</p>
+                    </a>
+                    <a
+                        href="committee-list.html"
+                        class="grid-item"
+                        role="button"
+                        tabindex="0"
+                    >
+                        <div class="icon-circle">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <p>কমিটির তালিকা</p>
+                    </a>
+                    <a href="#" class="grid-item" role="button" tabindex="0">
+                        <div class="icon-circle">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <p>অভিযোগ করুন</p>
+                    </a>
+                </div>
+            </section>
+
+            <section class="upcoming-events">
+                <div class="section-header">
+                    <h3>অনুষ্ঠান সমূহ</h3>
+                    <a href="#">বিস্তারিত জানুন</a>
+                </div>
+                <div class="carousel-container" id="upcomingCarousel">
+                    <div class="carousel-slide active">
+                        <img
+                            src="https://scontent.fdac22-2.fna.fbcdn.net/v/t39.30808-6/480766572_497176000108175_5306770879955734261_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=86c6b0&_nc_eui2=AeG4pmfKsQmjenFBBNAV3v6_IVwTuL7V1qkhXBO4vtXWqYNA-y8zO70K0rguc9tTrKAVCZLHvQkMpNSASjHes81b&_nc_ohc=3f3KLQ5rznAQ7kNvwH6EREB&_nc_oc=Adkuuz8Fbkf4N0f4YV4wiYBQGDwIR4Is2_-Pc2MkezRgIngPZv2D-MbBVntDyeHtJTE&_nc_zt=23&_nc_ht=scontent.fdac22-2.fna&_nc_gid=mU3rxBr8k7GSFRwDPgb5bA&oh=00_AfKK9RzH6B9Z1AHWqaFn5WP32Pu7XqZD-Xcta3WRMWHJ-Q&oe=683AAC2A"
+                            alt="Ganesh Chaturthi"
+                        />
+                    </div>
+                    <div class="carousel-slide">
+                        <img
+                            src="https://scontent.fdac22-1.fna.fbcdn.net/v/t39.30808-6/482260771_503233022835806_5109436260638247771_n.png?stp=dst-png_s960x960&_nc_cat=100&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeH7WgcQ_dTdb-PJyW4lgx1_1DrT_5MBZT_UOtP_kwFlP8aRLhGW_Ff3DVTaz9c5l8N-0Jdx_1Y75LtwwXxP4QBV&_nc_ohc=zrc8JD1aXhgQ7kNvwEUda1z&_nc_oc=AdlxVMIit-d0W3Woskpa4FAmePEf6loZc5rNc-UviKgBC3UKcdbMkVls13glpXaSZYY&_nc_zt=23&_nc_ht=scontent.fdac22-1.fna&_nc_gid=kwW774BJmTmEAwWJQdHYpg&oh=00_AfKQu8q9bb_t3AvZkUq2p-EAP_5mfc0VxHAhCs7ksrgCYw&oe=683A821B"
+                            alt="Community Event"
+                        />
+                    </div>
+                    <div class="carousel-slide">
+                        <img
+                            src="https://scontent.fdac22-1.fna.fbcdn.net/v/t39.30808-6/469396323_436879736137802_5924179973416268747_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=86c6b0&_nc_eui2=AeGB9iW64pi4tf5MebHO9Byr9n4sz609Muf2fizPrT0y51YUBKjsq2X-c97tfLudVejMMGrYV1D7Y6OvTAjGCnNC&_nc_ohc=IG8xeeVn4ssQ7kNvwHqk8iw&_nc_oc=AdnBP58j4wsqCt_NuOePMkwV5ckmZ1pqLLi87aolACoFLVaPMcXAP3uunNHIpNZ79Yc&_nc_zt=23&_nc_ht=scontent.fdac22-1.fna&_nc_gid=4NMMivmU04EbsETP5qvaMA&oh=00_AfKWB15ljfO3ftVfI9vr_rYam1zKMruYtCBdb67QXJOExg&oe=683A806F"
+                            alt="Volunteer Drive"
+                        />
+                    </div>
+
+                    <div class="carousel-dots" id="upcomingDots">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                    <br />
+                </div>
+            </section>
+
+            <section class="past-activities">
+                <div class="section-header">
+                    <h3>বিগত কার্যক্রম</h3>
+                    <a href="#">আরও দেখুন</a>
+                </div>
+                <div class="carousel-container" id="pastActivitiesCarousel">
+                    <div class="carousel-slide active">
+                        <img
+                            src="https://scontent.fdac22-1.fna.fbcdn.net/v/t39.30808-6/469479681_437983929360716_7283188098961956380_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeElbpHqgfvzC0aj6s6Jf2T8oBX-a1kWkvmgFf5rWRaS-ejwzfK3InrR9l21uYdiglOOkmeFtpOcAJnfdgvj_j_Q&_nc_ohc=LKzFIJWSYl4Q7kNvwGlKwxG&_nc_oc=AdnpC8XRnEUC1HAsa463osfM6Ii9s_6jHs08KRvjYfEMjwU0tEF_l5-xps_OCyywjx8&_nc_zt=23&_nc_ht=scontent.fdac22-1.fna&_nc_gid=VqbiCs9j_AoHBoWDs_w9SQ&oh=00_AfL7hY6uWWp4RWJBQ9zsWMW-2-x1qCFPJeE_s9YZ-VvHgA&oe=683A8980"
+                            alt="Blood Donation Drive"
+                        />
+                    </div>
+                    <div class="carousel-slide">
+                        <img
+                            src="https://scontent.fdac22-2.fna.fbcdn.net/v/t39.30808-6/469065285_436913246134451_5865498538569620942_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeGzqDFzRQKf1qfrn1oAp652plCoZ9T8qz-mUKhn1PyrP0-apuAxr0L6YjDq_D5WC-QtwHvwEWgSAun9PK377MAw&_nc_ohc=xyohPl1-4XAQ7kNvwEXPRB0&_nc_oc=AdnaNir_YLqkYqI1X-x77Jvc8cEr8zup9VFU1Zd7nnuBeXV7BMxY72NpRoVIXDYL3R4&_nc_zt=23&_nc_ht=scontent.fdac22-2.fna&_nc_gid=DYHAwadzKC1-rAC-0qOPsw&oh=00_AfL_RadmXX2kXNvTFbhihqXBVfvQ2g2PIqI9Rb63_-2JdQ&oe=683A9615"
+                            alt="Charity Event 2023"
+                        />
+                    </div>
+                    <div class="carousel-slide">
+                        <img
+                            src="https://scontent.fdac22-2.fna.fbcdn.net/v/t39.30808-6/484780843_511443735348068_4240080580227923408_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeHUne3d5Fd5-3KAPBleJo-z6nbKi9iMnKPqdsqL2Iycow4PhuHkl8_P0ZydwNmljpeW9mDqLl7OclGhdgrVe5cm&_nc_ohc=1ZgqIGkBFiEQ7kNvwGVtk4a&_nc_oc=AdnVMEFLe22nGNLfxlEKCeg2L_RpecQqmeS3Dd28XoBpE5XMOGtiCZdcIK32SrFYmVE&_nc_zt=23&_nc_ht=scontent.fdac22-2.fna&_nc_gid=ky-aAFP89Uf3v3l8l0J4qw&oh=00_AfIYX-MwZxSrmpMHn6L5g8XQuAHQXyPYdEvCt6jU3mR_Ew&oe=683AAAC9"
+                            alt="Community Clean-up"
+                        />
+                    </div>
+
+                    <div class="carousel-dots" id="pastActivitiesDots">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                    <br />
+                    <br />
+                    <br />
+                </div>
+            </section>
+
+            <nav class="bottom-nav">
+                <a href="#" class="nav-item" role="button" tabindex="0">
+                    <i class="fas fa-hand-holding-medical"></i>
+                    <span>রক্ত দানকারী</span>
+                </a>
+                <a href="#" class="nav-item" role="button" tabindex="0">
+                    <i class="fas fa-comments"></i>
+                    <span>চ্যাট সাপোর্ট</span>
+                </a>
+                <a
+                    href="#"
+                    class="nav-item active-nav-item"
+                    role="button"
+                    tabindex="0"
+                >
+                    <i class="fas fa-home"></i>
+                    <span>হোম</span>
+                </a>
+                <a href="#" class="nav-item" role="button" tabindex="0">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>নোটিশ</span>
+                </a>
+                <a href="#" class="nav-item" role="button" tabindex="0">
+                    <i class="fas fa-bars"></i>
+                    <span>আরও</span>
+                </a>
+            </nav>
+        </div>
+
+        <script>
+            // JavaScript for Carousel Functionality
+            document.addEventListener("DOMContentLoaded", () => {
+                // Function to manage a single carousel
+                function setupCarousel(containerId, dotsId) {
+                    const slides = document.querySelectorAll(
+                        `#${containerId} .carousel-slide`,
+                    );
+                    const dots = document.querySelectorAll(`#${dotsId} .dot`);
+                    let currentSlide = 0;
+                    let slideInterval;
+
+                    // Function to display a specific slide
+                    function showSlide(index) {
+                        slides.forEach((slide) =>
+                            slide.classList.remove("active"),
+                        );
+                        dots.forEach((dot) => dot.classList.remove("active"));
+
+                        if (slides[index]) {
+                            slides[index].classList.add("active");
+                        }
+                        if (dots[index]) {
+                            dots[index].classList.add("active");
+                        }
+                    }
+
+                    // Function to advance to the next slide
+                    function nextSlide() {
+                        currentSlide = (currentSlide + 1) % slides.length;
+                        showSlide(currentSlide);
+                    }
+
+                    // Function to start the auto-advance carousel
+                    function startCarousel() {
+                        clearInterval(slideInterval); // Clear any existing interval
+                        slideInterval = setInterval(nextSlide, 3000); // Change slide every 3 seconds
+                    }
+
+                    // Manual dot navigation
+                    dots.forEach((dot, index) => {
+                        dot.addEventListener("click", () => {
+                            currentSlide = index;
+                            showSlide(currentSlide);
+                            startCarousel(); // Restart the auto-advance timer
+                        });
+                    });
+
+                    // Initialize the first slide and start the carousel
+                    showSlide(currentSlide);
+                    startCarousel();
+                }
+
+                // Setup the "Upcoming Events" carousel
+                setupCarousel("upcomingCarousel", "upcomingDots");
+
+                // Setup the "Past Activities" carousel
+                setupCarousel("pastActivitiesCarousel", "pastActivitiesDots");
+            });
+        </script>
+    </body>
+</html>
