@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <link rel="icon" type="image" href="https://i.postimg.cc/3x37zcx6/Plugin-icon-1-2.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>রেজিস্ট্রেশন ফর্ম</title>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Hind Siliguri', sans-serif;
+      background-color: #fdf4f1;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 400px;
+      background: white;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+    label {
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 4px;
+      display: block;
+      color: #333;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 16px;
+      border: none;
+      border-bottom: 2px solid #ffa077;
+      background: transparent;
+      font-size: 16px;
+      color: #333;
+      outline: none;
+    }
+    input::placeholder {
+      color: #aaa;
+    }
+    .submit-button {
+      background-color: #f17842;
+      color: white;
+      border: none;
+      padding: 12px 0;
+      width: 100%;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+    .submit-button:hover {
+      background-color: #e36730;
+    }
+    .note {
+      background-color: #ffe8e0;
+      color: #c44c00;
+      font-size: 14px;
+      padding: 10px;
+      border-radius: 6px;
+      margin-top: 10px;
+    }
+        #successModal .modal-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0,0,0,0.4);
+          z-index: 999;
+        }
+
+        #successModal .modal-content {
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: #fff8f4;
+          padding: 24px;
+          border-radius: 12px;
+          box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+          z-index: 1000;
+          text-align: center;
+          max-width: 90%;
+          width: 300px;
+        }
+
+        #successModal h2 {
+          color: #24a148;
+          margin-bottom: 10px;
+        }
+
+        #successModal p {
+          font-size: 16px;
+          color: #444;
+        }
+
+        #successModal button {
+          background-color: #f17842;
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          font-size: 14px;
+          border-radius: 8px;
+          cursor: pointer;
+          margin-top: 15px;
+        }
+
+        #successModal button:hover {
+          background-color: #e36730;
+        }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <form id="registrationForm">
+    <label for="name">সদস্যের নাম লিখুন</label>
+    <input type="text" id="name" required>
+
+    <label for="father">পিতার নাম</label>
+    <input type="text" id="father" required>
+
+    <label for="mother">মাতার নাম</label>
+    <input type="text" id="mother" required>
+
+    <label for="dob">জন্ম তারিখ</label>
+    <input type="date" id="dob" value="2003-03-24" required>
+
+    <label for="address">ঠিকানা</label>
+    <input type="text" id="address" required>
+
+    <label for="phone">মোবাইল নাম্বার</label>
+    <input type="tel" id="phone" required>
+
+    <label for="blood">রক্তের গ্রুপ</label>
+    <select id="blood" required>
+      <option value="">-- সিলেক্ট করুন --</option>
+      <option value="A+">A+</option>
+      <option value="A-">A-</option>
+      <option value="B+">B+</option>
+      <option value="B-">B-</option>
+      <option value="O+">O+</option>
+      <option value="O-">O-</option>
+      <option value="AB+">AB+</option>
+      <option value="AB-">AB-</option>
+    </select>
+
+    <label for="donor">আপনি রক্ত ডোনেশন করতে আগ্রহী?</label>
+    <select id="donor" required>
+      <option value="">-- নির্বাচন করুন --</option>
+      <option value="হ্যাঁ, আমি আগ্রহী">হ্যাঁ, আমি আগ্রহী</option>
+      <option value="না, আমি আগ্রহী না">না, আমি আগ্রহী না</option>
+    </select>
+
+    <label for="ref">রেফার</label>
+    <input type="text" id="ref">
+
+    <div class="note">
+      এই সদস্য শর্তাবলী মেনে রেজিস্ট্রেশন ফরম পূরণ করতে আগ্রহী হয়েছেন।
+    </div>
+
+    <button type="submit" class="submit-button">রেজিস্ট্রেশন করুন</button>
+  </form>
+</div>
+
+    <div id="successModal" style="display: none;">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <h2>✅ রেজিস্ট্রেশন সম্পন্ন!</h2>
+        <p>আপনার তথ্য সফলভাবে জমা হয়েছে।</p>
+        <button onclick="closeModal()">ঠিক আছে</button>
+      </div>
+    </div>
+
+    <script>
+      function showModal() {
+        document.getElementById("successModal").style.display = "block";
+      }
+
+      function closeModal() {
+        document.getElementById("successModal").style.display = "none";
+      }
+
+      document.getElementById("registrationForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const formData = new FormData();
+        formData.append("entry.2076900592", document.getElementById("name").value);
+        formData.append("entry.1501291116", document.getElementById("father").value);
+        formData.append("entry.2031411970", document.getElementById("mother").value);
+        formData.append("entry.301773992", document.getElementById("dob").value);
+        formData.append("entry.568676195", document.getElementById("address").value);
+        formData.append("entry.175146785", document.getElementById("phone").value);
+        formData.append("entry.651419694", document.getElementById("blood").value);
+        formData.append("entry.2111214313", document.getElementById("donor").value);
+        formData.append("entry.1732282533", document.getElementById("ref").value);
+
+        fetch("https://docs.google.com/forms/d/e/1FAIpQLSfkmX0tQHYHSTf_92vfA79MaZI0ICiY9LmGRPsFJt3HsNRSUg/formResponse", {
+          method: "POST",
+          mode: "no-cors",
+          body: formData,
+        })
+        .then(() => {
+          showModal();
+          document.getElementById("registrationForm").reset();
+        })
+        .catch((error) => {
+          alert("❌ দুঃখিত, ফর্ম পাঠাতে সমস্যা হয়েছে!");
+        });
+      });
+    </script>
+
+</body>
+</html>
