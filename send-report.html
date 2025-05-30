@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <link rel="icon" type="image" href="https://i.postimg.cc/3x37zcx6/Plugin-icon-1-2.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>অভিযোগ করুন</title>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Hind Siliguri', sans-serif;
+      background-color: #fff4ef;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 400px;
+      background: #ffffff;
+      margin: 30px auto;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 4px;
+      color: #333;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-bottom: 2px solid #f17842;
+      background: transparent;
+      margin-bottom: 20px;
+      font-size: 16px;
+      outline: none;
+      color: #444;
+    }
+    .donation-reason {
+      font-size: 14px;
+      color: #444;
+      background-color: #fff1ec;
+      border-left: 4px solid #f17842;
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+    }
+    .bkash-logo {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .bkash-logo img {
+      max-width: 100px;
+    }
+    .bkash-number {
+      color: #e05a00;
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .submit-button {
+      background-color: #f17842;
+      color: white;
+      border: none;
+      padding: 14px;
+      width: 100%;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .submit-button:hover {
+      background-color: #e05a00;
+    }
+
+    /* Success Modal */
+    #successModal {
+      display: none;
+    }
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.4);
+      z-index: 999;
+    }
+    .modal-content {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+      z-index: 1000;
+      text-align: center;
+      width: 300px;
+    }
+    .modal-content h2 {
+      color: #2e7d32;
+    }
+    .modal-content p {
+      margin: 10px 0;
+    }
+    .modal-content button {
+      background-color: #f17842;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .modal-content button:hover {
+      background-color: #e05a00;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <form id="donationForm">
+    <label for="name">আপনার নাম লিখুন</label>
+    <input type="text" id="name" required>
+
+    <label for="phone">মোবাইল নাম্বার</label>
+    <input type="tel" id="phone" required>
+
+    <label for="trxId">আপনার অভিযোগ লিখুন</label>
+    <input type="text" id="trxId" required>
+
+    <button type="submit" class="submit-button">প্রদান করুন</button>
+  </form>
+</div>
+
+<!-- Success Modal -->
+<div id="successModal">
+  <div class="modal-overlay"></div>
+  <div class="modal-content">
+    <h2>✅ ধন্যবাদ!</h2>
+    <p>আপনার অভিযোগ আমাদের সার্ভারে প্রদান করা হয়েছে। আমাদের টিম থেকে আপনার সাথে খুব দ্রুতই যোগাযোগ করবে।</p>
+    <button onclick="closeModal()">ঠিক আছে</button>
+  </div>
+</div>
+
+<script>
+  function showModal() {
+    document.getElementById("successModal").style.display = "block";
+  }
+
+  function closeModal() {
+    document.getElementById("successModal").style.display = "none";
+  }
+
+  document.getElementById("donationForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("entry.179410553", document.getElementById("name").value);
+    formData.append("entry.27941103", document.getElementById("phone").value);
+    formData.append("entry.1527033394", document.getElementById("trxId").value);
+
+    fetch("https://docs.google.com/forms/d/e/1FAIpQLSczXcDk4yM35jXHDMls9w-fLDv3aNL1gO4yN8TVYZXJvCkS3A/formResponse", {
+      method: "POST",
+      mode: "no-cors",
+      body: formData,
+    })
+    .then(() => {
+      showModal();
+      document.getElementById("donationForm").reset();
+    })
+    .catch(() => {
+      alert("❌ অভিযোগ গ্রহন করতে সমস্যা হয়েছে! পুনরায় চেষ্ঠা করুন।");
+    });
+  });
+</script>
+
+</body>
+</html>
